@@ -21,6 +21,17 @@ router.get("/:id", validateCohortId, async (req, res) => {
   res.status(200).json(req.cohort);
 });
 
+//  Returns all the students assigned to a specific cohort -- GET /api/cohorts/:id/students
+router.get("/:id/students", validateCohortId, async (req, res) => {
+  try {
+    const students = await Cohorts.getCohortStudents(req.params.id);
+    res.status(200).json(students);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error finding students for this cohort" });
+  }
+});
+
 // Adds a new cohort to the database and returns the new cohort -- POST /api/cohorts
 router.post("/", validateCohort, async (req, res) => {
   try {
