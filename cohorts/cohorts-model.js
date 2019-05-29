@@ -2,7 +2,8 @@ const db = require("../data/dbConfig.js");
 
 module.exports = {
   get,
-  getById
+  getById,
+  insert
 };
 
 function get() {
@@ -11,6 +12,14 @@ function get() {
 
 function getById(id) {
   return db("cohorts")
-  .where({ id })
-  .first();
+    .where({ id })
+    .first();
+}
+
+function insert(cohort) {
+  return db("cohorts")
+    .insert(cohort)
+    .then(ids => {
+      return getById(ids[0]);
+    });
 }

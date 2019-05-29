@@ -21,8 +21,18 @@ router.get("/:id", validateCohortId, async (req, res) => {
   res.status(200).json(req.cohort);
 });
 
-//  Middleware
+// Adds a new cohort to the database and returns the new cohort -- POST /api/cohorts
+router.post("/", validateCohort, async (req, res) => {
+  try {
+    const cohort = await Cohorts.insert(req.body);
+    res.status(201).json(cohort);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error creating the new Cohort!" });
+  }
+});
 
+//  Middleware
 async function validateCohortId(req, res, next) {
   try {
     const { id } = req.params;
