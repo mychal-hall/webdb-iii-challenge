@@ -32,6 +32,21 @@ router.post("/", validateCohort, async (req, res) => {
   }
 });
 
+// Updates a cohort. -- PUT /api/cohorts/:id
+router.put("/:id", validateCohortId, async (req, res) => {
+  try {
+    const cohort = await Cohorts.update(req.params.id, req.body);
+    if (cohort) {
+      res.status(200).json(cohort);
+    } else {
+      res.status(404).json({ message: "No cohort with that ID exists" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error updating the cohort." });
+  }
+});
+
 //  Middleware
 async function validateCohortId(req, res, next) {
   try {
