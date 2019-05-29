@@ -4,7 +4,14 @@ module.exports = {
   development: {
     client: "sqlite3",
     connection: {
-      filename: "./data/lambda.db3"
+      filename: "./data/lambda.sqlite3"
+    },
+    migrations: {
+      tableName: "knex_migrations",
+      directory: "./migrations"
+    },
+    seeds: {
+      directory: "./seeds"
     },
     useNullAsDefault: true
   }
