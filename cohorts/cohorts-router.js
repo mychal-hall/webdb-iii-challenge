@@ -47,6 +47,21 @@ router.put("/:id", validateCohortId, async (req, res) => {
   }
 });
 
+// Deletes a Cohort. Returns number of deleted cohorts -- DELETE /api/cohorts/:id
+router.delete("/:id", validateCohortId, async (req, res) => {
+  try {
+    const count = await Cohorts.remove(req.params.id);
+    if (count > 0) {
+      res.status(200).json({ message: "The Cohort is removed." });
+    } else {
+      res.status(404).json({ message: "No cohort exists with that ID" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Critical Error - Unable to comply." });
+  }
+});
+
 //  Middleware
 async function validateCohortId(req, res, next) {
   try {
