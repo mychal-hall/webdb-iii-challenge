@@ -10,7 +10,7 @@ function get() {
 }
 
 function getById(id) {
-  return db("zoos")
+  return db("cohorts")
   .where({ id })
   .first();
 }
